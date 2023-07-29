@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "minecraft-command-helper (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "minecraft-command-helper (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
