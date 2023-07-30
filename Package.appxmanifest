@@ -26,7 +26,9 @@
   </Dependencies>
 
   <Resources>
-    <Resource Language="x-generate"/>
+    <Resource Language="zh-Hans"/>
+    <Resource Language="zh-Hant"/>
+    <Resource Language="en-US"/>
   </Resources>
 
   <Applications>
@@ -34,7 +36,7 @@
       Executable="$targetnametoken$.exe"
       EntryPoint="$targetentrypoint$">
       <uap:VisualElements
-        DisplayName="minecraft-command-helper"
+        DisplayName="ms-resource:AppDisplayName"
         Description="minecraft-command-helper"
         BackgroundColor="transparent"
         Square150x150Logo="Assets\Square150x150Logo.png"
