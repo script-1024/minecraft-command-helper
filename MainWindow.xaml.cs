@@ -1,24 +1,14 @@
-﻿using Microsoft.UI;
+﻿using System;
+using System.Linq;
+
+using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-//using Microsoft.UI.Xaml.Controls.Primitives;
-//using Microsoft.UI.Xaml.Data;
-//using Microsoft.UI.Xaml.Input;
-//using Microsoft.UI.Xaml.Media;
-//using Microsoft.UI.Xaml.Media.Animation;
 using Microsoft.UI.Xaml.Navigation;
 using Microsoft.UI.Windowing;
-using System;
-//using System.Collections.Generic;
-//using System.IO;
-using System.Linq;
-using WinRT.Interop;
-using Windows.Graphics;
-//using Windows.Foundation;
-//using Windows.Foundation.Collections;
-using Vanara.PInvoke;
+
 using minecraft_command_helper.Pages;
-using Windows.System;
+using Script1024.Library;
 
 namespace minecraft_command_helper
 {
@@ -32,9 +22,12 @@ namespace minecraft_command_helper
             this.InitializeComponent();
 
             //获取窗口句柄
-            hwnd = WindowNative.GetWindowHandle(this);
+            hwnd = WinRT.Interop.WindowNative.GetWindowHandle(this);
             WindowId id = Win32Interop.GetWindowIdFromWindow(hwnd);
             appWindow = AppWindow.GetFromWindowId(id);
+
+            // 设置窗口最小尺寸
+            WindowProc.SetWndMinSize(hwnd, 800, 600);
 
             // 设置标题栏，检查是否支持新方法 (Win11)
             if (AppWindowTitleBar.IsCustomizationSupported())
@@ -45,53 +38,22 @@ namespace minecraft_command_helper
                 // 标题栏按键背景色设置为透明
                 titleBar.ButtonBackgroundColor = Colors.Transparent;
                 titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
-                // 获取系统缩放率
-                var scale = (float)User32.GetDpiForWindow(hwnd) / 96;
-                titleBar.SetDragRectangles(new RectInt32[] { new RectInt32((int)(50 * scale), 0, 10000, (int)(50 * scale)) });
             }
             else
             {
                 //不支持就用系统自带的方法
-                //this.ExtendsContentIntoTitleBar = true;
-                //this.SetTitleBar(AppTitleBar);
+                this.ExtendsContentIntoTitleBar = true;
+                this.SetTitleBar(TitleBar);
             }
-
-            this.OnLoad();
+            
+            this.OnLoaded();
         }
 
-        private void OnLoad()
+        private void OnLoaded()
         {
             TitleBar.SetTitle("MC 指令助手");
             nv.SelectedItem = nv.MenuItems.OfType<NavigationViewItem>().First();
             NavView_Navigate(typeof(HomePage));
-        }
-
-
-        private void Window_SizeChanged(object sender, WindowSizeChangedEventArgs args)
-        {
-            var width = appWindow.Size.Width;
-            var height = appWindow.Size.Height;
-
-            if (width < 800 || height < 600) 
-            {
-                width = (width < 800) ? 800 : width;
-                height = (height < 600) ? 600 : height;
-                appWindow.Resize(new SizeInt32(width, height));
-                
-            }
-
-            if (width <= 1200) 
-            { 
-                //SearchBox.Width = width - 600; 
-                if (width < 1024) 
-                {
-                    //SearchBox.Margin = new Thickness(width*0.5-360, 8, 0, 8);
-                }
-            }
-            else
-            {
-                //SearchBox.Margin = new Thickness(width*0.5-460, 8, 0, 8);
-            }
         }
 
         private void NaviSelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
