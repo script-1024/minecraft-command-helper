@@ -16,6 +16,7 @@ namespace minecraft_command_helper
     {
         private IntPtr hwnd;
         private AppWindow appWindow;
+        private SystemBackdrop backdropHelper;
 
         public MainWindow()
         {
@@ -45,13 +46,16 @@ namespace minecraft_command_helper
                 this.ExtendsContentIntoTitleBar = true;
                 this.SetTitleBar(TitleBar);
             }
-            
+
+            // 背景设置前置
+            backdropHelper = new SystemBackdrop(this);
             this.OnLoaded();
         }
 
         private void OnLoaded()
         {
             TitleBar.SetTitle("MC 指令助手");
+            backdropHelper.TrySetMica();
             nv.SelectedItem = nv.MenuItems.OfType<NavigationViewItem>().First();
             NavView_Navigate(typeof(HomePage));
         }
