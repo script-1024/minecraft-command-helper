@@ -31,12 +31,12 @@
             Orientation="Horizontal"
             Spacing="16">
             
-            <Image Width="16" Height="16" VerticalAlignment="Center" Source="Assets/StoreLogo.png" />
+            <Image Width="16" Height="16" VerticalAlignment="Center" Source="Assets\StoreLogo.png" />
             <TextBlock x:Name="Title" VerticalAlignment="Center" Text="ms-resource:AppDisplayName" />
             
         </StackPanel>
 
-        <AutoSuggestBox  x:Name="SearchBox" Grid.Column="1" MinWidth="300" MaxWidth="500" VerticalAlignment="Center" PlaceholderText="搜尋" QueryIcon="Find"/>
+        <AutoSuggestBox  x:Name="SearchBox" Grid.Column="1" Width="500" VerticalAlignment="Center" PlaceholderText="搜尋" QueryIcon="Find"/>
     </Grid>
 
 </UserControl>
